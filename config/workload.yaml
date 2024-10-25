@@ -1,0 +1,23 @@
+apiVersion: carto.run/v1alpha1
+kind: Workload
+metadata:
+  name: trivy-python-app
+  labels:
+    apps.tanzu.vmware.com/workload-type: server
+    apps.tanzu.vmware.com/has-tests: "true"
+    app.kubernetes.io/part-of: trivy-python-app
+spec:
+  build:
+    env:
+      - name: BP_CPYTHON_VERSION
+        value: "3.9.*"
+  params:
+  - name: testing_pipeline_matching_labels
+    value:
+      apps.tanzu.vmware.com/language: python
+      apps.tanzu.vmware.com/pipeline: test
+  source:
+    git:
+      url: https://github.com/x95castle1/trivy-python-app
+      ref:
+        branch: main
